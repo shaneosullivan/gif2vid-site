@@ -1,0 +1,20 @@
+{
+  "name": "gif2vid-site",
+  "version": "1.0.0",
+  "description": "A simple web application to convert GIF images to MP4 videos",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:main && npm run build:worker",
+    "build:main": "esbuild main.ts --bundle --outfile=dist/main.js --format=esm",
+    "build:worker": "esbuild worker.ts --bundle --outfile=dist/worker.js --format=esm",
+    "watch": "npm run build -- --watch",
+    "serve": "npx serve . -p 3340"
+  },
+  "dependencies": {
+    "gif2vid": "^0.0.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.2"
+  }
+}
