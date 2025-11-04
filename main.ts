@@ -13,6 +13,7 @@ const worker = new Worker("./dist/worker.js", { type: "module" });
 let messageId = 0;
 let isWorkerReady = false;
 let currentObjectUrl: string | null = null;
+let currentGifUrl: string | null = null;
 
 // DOM elements
 const fileInput = document.getElementById("gifFile") as HTMLInputElement;
@@ -54,10 +55,14 @@ function formatFileSize(bytes: number): string {
 
 // Clean up previous conversion resources
 function cleanupPreviousConversion() {
-  // Revoke previous object URL to free memory
+  // Revoke previous object URLs to free memory
   if (currentObjectUrl) {
     URL.revokeObjectURL(currentObjectUrl);
     currentObjectUrl = null;
+  }
+  if (currentGifUrl) {
+    URL.revokeObjectURL(currentGifUrl);
+    currentGifUrl = null;
   }
 
   // Clear output container (removes video element references)
@@ -100,33 +105,54 @@ function handleConversionSuccess(
   const url = URL.createObjectURL(blob);
   currentObjectUrl = url;
 
-  // Create video element
+  // Create comparison container
+  const comparisonContainer = document.createElement("div");
+  comparisonContainer.className = "comparison-container";
+
+  // Create GIF container
+  const gifContainer = document.createElement("div");
+  gifContainer.className = "media-container";
+  const gifTitle = document.createElement("h3");
+  gifTitle.className = "media-title";
+  gifTitle.textContent = "Original GIF";
+  const gifImage = document.createElement("img");
+  gifImage.src = currentGifUrl!;
+  gifImage.className = "media-preview";
+  gifImage.alt = "Original GIF";
+  const gifSize = document.createElement("div");
+  gifSize.className = "media-size";
+  gifSize.textContent = formatFileSize(inputSize);
+  gifContainer.appendChild(gifTitle);
+  gifContainer.appendChild(gifImage);
+  gifContainer.appendChild(gifSize);
+
+  // Create video container
+  const videoContainer = document.createElement("div");
+  videoContainer.className = "media-container";
+  const videoTitle = document.createElement("h3");
+  videoTitle.className = "media-title";
+  videoTitle.textContent = "Converted MP4";
   const video = document.createElement("video");
   video.src = url;
   video.controls = true;
   video.loop = true;
   video.autoplay = true;
-  video.className = "video-preview";
+  video.className = "media-preview";
+  const videoSize = document.createElement("div");
+  videoSize.className = "media-size";
+  videoSize.textContent = formatFileSize(outputSize);
+  videoContainer.appendChild(videoTitle);
+  videoContainer.appendChild(video);
+  videoContainer.appendChild(videoSize);
 
-  // Create download link
-  const downloadLink = document.createElement("a");
-  downloadLink.href = url;
-  downloadLink.download = "converted-video.mp4";
-  downloadLink.textContent = "Download MP4";
-  downloadLink.className = "download-button";
+  // Add both containers to comparison
+  comparisonContainer.appendChild(gifContainer);
+  comparisonContainer.appendChild(videoContainer);
 
   // Create info section
   const info = document.createElement("div");
   info.className = "conversion-info";
   info.innerHTML = `
-    <div class="info-item">
-      <span class="info-label">Original GIF:</span>
-      <span class="info-value">${formatFileSize(inputSize)}</span>
-    </div>
-    <div class="info-item">
-      <span class="info-label">Converted MP4:</span>
-      <span class="info-value">${formatFileSize(outputSize)}</span>
-    </div>
     <div class="info-item">
       <span class="info-label">Size Reduction:</span>
       <span class="info-value">${((1 - outputSize / inputSize) * 100).toFixed(
@@ -135,10 +161,17 @@ function handleConversionSuccess(
     </div>
   `;
 
+  // Create download link
+  const downloadLink = document.createElement("a");
+  downloadLink.href = url;
+  downloadLink.download = "converted-video.mp4";
+  downloadLink.textContent = "Download MP4";
+  downloadLink.className = "download-button";
+
   // Append elements to output
-  outputContainer.appendChild(video);
-  outputContainer.appendChild(downloadLink);
+  outputContainer.appendChild(comparisonContainer);
   outputContainer.appendChild(info);
+  outputContainer.appendChild(downloadLink);
 
   updateStatus("Conversion completed successfully!", "success");
 }
@@ -160,6 +193,10 @@ async function processGifFile(file: File) {
 
   try {
     updateStatus("Reading file...", "processing");
+
+    // Create object URL for the GIF to display
+    const gifBlob = new Blob([file], { type: "image/gif" });
+    currentGifUrl = URL.createObjectURL(gifBlob);
 
     // Read the file as an ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();

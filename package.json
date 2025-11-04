@@ -11,7 +11,7 @@
     "serve": "npx serve . -p 3340"
   },
   "dependencies": {
-    "gif2vid": "^0.0.3"
+    "gif2vid": "^0.0.4"
   },
   "devDependencies": {
     "esbuild": "^0.24.0",
