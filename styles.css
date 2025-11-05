@@ -321,6 +321,26 @@ body {
   transform: translateY(0);
 }
 
+.ios-instructions {
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.ios-instructions p {
+  margin: 0.5rem 0;
+  color: #1e40af;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.ios-instructions p:first-child {
+  font-weight: 600;
+}
+
 .footer {
   background: #f8fafc;
   display: flex;

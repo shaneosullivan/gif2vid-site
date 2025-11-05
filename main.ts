@@ -145,6 +145,54 @@ function handleConversionSuccess(
   comparisonContainer.appendChild(gifContainer);
   comparisonContainer.appendChild(videoContainer);
 
+  // Create download link/button
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+  if (isIOS) {
+    // On iOS, create a button that triggers the share dialog
+    const downloadButton = document.createElement("button");
+    downloadButton.textContent = "Share/Save Video";
+    downloadButton.className = "download-button";
+    downloadButton.onclick = async () => {
+      try {
+        const file = new File([blob], "converted-video.mp4", { type: "video/mp4" });
+        if (navigator.share && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: "Converted Video",
+            text: "GIF converted to MP4"
+          });
+        } else {
+          // Fallback: open video in new tab
+          window.open(url, "_blank");
+        }
+      } catch (error) {
+        console.error("Share failed:", error);
+        // Fallback: open video in new tab
+        window.open(url, "_blank");
+      }
+    };
+
+    // Add iOS-specific instructions
+    const iosInstructions = document.createElement("div");
+    iosInstructions.className = "ios-instructions";
+    iosInstructions.innerHTML = `
+      <p>💡 Tap the button above to save to Photos or Files</p>
+      <p>Or long-press the video below and select "Save Video"</p>
+    `;
+
+    outputContainer.appendChild(downloadButton);
+    outputContainer.appendChild(iosInstructions);
+  } else {
+    // Standard download link for other platforms
+    const downloadLink = document.createElement("a");
+    downloadLink.href = url;
+    downloadLink.download = "converted-video.mp4";
+    downloadLink.textContent = "Download MP4";
+    downloadLink.className = "download-button";
+    outputContainer.appendChild(downloadLink);
+  }
+
   // Create info section
   const info = document.createElement("div");
   info.className = "conversion-info";
@@ -157,17 +205,9 @@ function handleConversionSuccess(
     </div>
   `;
 
-  // Create download link
-  const downloadLink = document.createElement("a");
-  downloadLink.href = url;
-  downloadLink.download = "converted-video.mp4";
-  downloadLink.textContent = "Download MP4";
-  downloadLink.className = "download-button";
-
-  // Append elements to output
+  // Append comparison and info
   outputContainer.appendChild(comparisonContainer);
   outputContainer.appendChild(info);
-  outputContainer.appendChild(downloadLink);
 
   updateStatus("Conversion completed successfully!", "success");
 }
