@@ -1,4 +1,4 @@
-# GIF to MP4 Converter
+# GIF to Video Converter
 
 A simple web application that converts GIF animations to MP4 videos directly in the browser using Web Workers. No backend required!
 

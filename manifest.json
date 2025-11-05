@@ -1,7 +1,7 @@
 {
-  "name": "GIF to MP4 Converter",
-  "short_name": "GIF2MP4",
-  "description": "Convert your GIF animations to efficient MP4 videos",
+  "name": "GIF to Video Converter",
+  "short_name": "Gif2Vid",
+  "description": "Convert your GIF animations to MP4 videos",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f2027",

@@ -127,7 +127,7 @@ function handleConversionSuccess(
   videoContainer.className = "media-container";
   const videoTitle = document.createElement("h3");
   videoTitle.className = "media-title";
-  videoTitle.textContent = "Converted MP4";
+  videoTitle.textContent = "Converted Video";
   const video = document.createElement("video");
   video.src = url;
   video.controls = true;
@@ -155,12 +155,14 @@ function handleConversionSuccess(
     downloadButton.className = "download-button";
     downloadButton.onclick = async () => {
       try {
-        const file = new File([blob], "converted-video.mp4", { type: "video/mp4" });
+        const file = new File([blob], "converted-video.mp4", {
+          type: "video/mp4",
+        });
         if (navigator.share && navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file],
             title: "Converted Video",
-            text: "GIF converted to MP4"
+            text: "GIF converted to MP4",
           });
         } else {
           // Fallback: open video in new tab
@@ -188,7 +190,7 @@ function handleConversionSuccess(
     const downloadLink = document.createElement("a");
     downloadLink.href = url;
     downloadLink.download = "converted-video.mp4";
-    downloadLink.textContent = "Download MP4";
+    downloadLink.textContent = "Download Video";
     downloadLink.className = "download-button";
     outputContainer.appendChild(downloadLink);
   }
@@ -238,7 +240,7 @@ async function processGifFile(file: File) {
     const arrayBuffer = await file.arrayBuffer();
     const gifBuffer = new Uint8Array(arrayBuffer);
 
-    updateStatus("Converting GIF to MP4...", "processing");
+    updateStatus("Converting GIF to Video...", "processing");
 
     // Send to worker for conversion
     worker.postMessage(

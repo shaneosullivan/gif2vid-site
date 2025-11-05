@@ -30,7 +30,7 @@ self.onmessage = async (event: MessageEvent<ConversionMessage>) => {
     self.postMessage({
       type: "progress",
       id,
-      message: "Converting GIF to MP4...",
+      message: "Converting GIF to Video...",
     } as ConversionResponse);
 
     // Convert the GIF buffer to Uint8Array
