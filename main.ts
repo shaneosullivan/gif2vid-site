@@ -19,9 +19,7 @@ let currentGifUrl: string | null = null;
 const fileInput = document.getElementById("gifFile") as HTMLInputElement;
 const statusElement = document.getElementById("status") as HTMLDivElement;
 const outputContainer = document.getElementById("output") as HTMLDivElement;
-const workerStatusIndicator = document.getElementById(
-  "workerStatus"
-) as HTMLSpanElement;
+
 const fileInputWrapper = document.querySelector(
   ".file-input-wrapper"
 ) as HTMLDivElement;
@@ -29,9 +27,7 @@ const fileInputWrapper = document.querySelector(
 // Update worker status indicator
 function updateWorkerStatus(ready: boolean) {
   isWorkerReady = ready;
-  workerStatusIndicator.className = `worker-status ${
-    ready ? "ready" : "loading"
-  }`;
+
   if (ready) {
     updateStatus("Select a GIF file to convert.", "info");
   }
@@ -184,7 +180,7 @@ async function processGifFile(file: File) {
   }
 
   if (!isWorkerReady) {
-    updateStatus("Worker is not ready yet. Please wait...", "error");
+    updateStatus("App is not ready yet. Please wait...", "error");
     return;
   }
 
@@ -252,5 +248,19 @@ fileInputWrapper.addEventListener("drop", async (event) => {
   await processGifFile(file);
 });
 
+// Register service worker for PWA support
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((registration) => {
+        console.log("Service Worker registered:", registration.scope);
+      })
+      .catch((error) => {
+        console.error("Service Worker registration failed:", error);
+      });
+  });
+}
+
 // Initialize status
-updateStatus("Initializing worker...", "processing");
+updateStatus("Initializing app...", "processing");

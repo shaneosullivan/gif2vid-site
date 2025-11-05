@@ -4,19 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GIF to MP4 Converter</title>
+    <meta
+      name="description"
+      content="Convert your GIF animations to efficient MP4 videos"
+    />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2c5364" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="GIF2MP4" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="container">
       <header class="header">
+        <a
+          href="https://github.com/shaneosullivan/gif2vid-site"
+          target="_blank"
+          rel="noopener"
+          class="github-link"
+          aria-label="View source on GitHub"
+        >
+          <img src="images/github.svg" alt="GitHub" class="github-icon" />
+        </a>
         <h1 class="title">GIF to MP4 Converter</h1>
         <p class="subtitle">
           Convert your GIF animations to efficient MP4 videos
         </p>
-        <div class="worker-badge">
-          <span id="workerStatus" class="worker-status loading"></span>
-          <span class="worker-text">Web Worker</span>
-        </div>
       </header>
 
       <main class="main-content">

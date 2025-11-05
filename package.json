@@ -8,13 +8,15 @@
     "build:main": "esbuild main.ts --bundle --outfile=dist/main.js --format=esm",
     "build:worker": "esbuild worker.ts --bundle --outfile=dist/worker.js --format=esm",
     "watch": "npm run build -- --watch",
-    "serve": "npx serve . -p 3340"
+    "serve": "npx serve . -p 3340",
+    "generate-icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
     "gif2vid": "^0.0.4"
   },
   "devDependencies": {
     "esbuild": "^0.24.0",
+    "sharp": "^0.34.4",
     "typescript": "^5.7.2"
   }
 }
