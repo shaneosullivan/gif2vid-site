@@ -1,0 +1,17 @@
+# robots.txt for gif2vid.com
+
+User-agent: *
+Allow: /
+
+# Disallow access to build artifacts and config files
+Disallow: /dist/
+Disallow: /node_modules/
+Disallow: /*.ts$
+Disallow: /*.json$
+Disallow: /package.json
+Disallow: /tsconfig.json
+
+# Allow important files
+Allow: /manifest.json
+Allow: /sw.js
+
