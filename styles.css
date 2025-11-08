@@ -26,11 +26,30 @@ body {
 }
 
 .header {
-  background: linear-gradient(135deg, #2c5364 0%, #203a43 100%);
   color: white;
-  padding: 3rem 2rem 2rem;
+  padding: 0;
   text-align: center;
   position: relative;
+}
+
+.hero-section {
+  background-image: url("/images/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 32, 39, 0.6);
+  backdrop-filter: blur(2px);
 }
 
 .github-link {
@@ -62,14 +81,19 @@ body {
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin: 0;
   letter-spacing: -0.5px;
+  position: relative;
+  z-index: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .subtitle {
+  color: black;
+  padding: 1.5rem 2rem;
+  margin: 0;
   font-size: 1.1rem;
   opacity: 0.9;
-  margin-bottom: 1.5rem;
   font-weight: 400;
 }
 
@@ -392,6 +416,10 @@ body {
 @media (max-width: 640px) {
   body {
     padding: 1rem;
+  }
+
+  .hero-section {
+    padding: 3rem 1rem;
   }
 
   .title {
