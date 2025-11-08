@@ -135,3 +135,4 @@ dist
 !.yarn/versions
 
 .last_modified_timestamp
+.DS_Store
