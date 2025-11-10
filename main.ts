@@ -63,6 +63,7 @@ function cleanupPreviousConversion() {
 
   // Clear output container (removes video element references)
   outputContainer.innerHTML = "";
+  outputContainer.style.display = "none";
 }
 
 // Handle worker messages
@@ -194,6 +195,8 @@ function handleConversionSuccess(
     downloadLink.className = "download-button";
     outputContainer.appendChild(downloadLink);
   }
+
+  outputContainer.style.display = "block";
 
   // Create info section
   const info = document.createElement("div");
