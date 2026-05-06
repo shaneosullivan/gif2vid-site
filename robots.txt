@@ -6,12 +6,8 @@ Allow: /
 # Disallow access to build artifacts and config files
 Disallow: /dist/
 Disallow: /node_modules/
-Disallow: /*.ts$
-Disallow: /*.json$
 Disallow: /package.json
+Disallow: /package-lock.json
 Disallow: /tsconfig.json
 
-# Allow important files
-Allow: /manifest.json
-Allow: /sw.js
-
+Sitemap: https://gif2vid.com/sitemap.xml
