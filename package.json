@@ -4,7 +4,7 @@
   "description": "A simple web application to convert GIF images to MP4 videos",
   "type": "module",
   "scripts": {
-    "build": "npm run build:main && build:site && npm run build:worker",
+    "build": "npm run build:main && npm run build:site && npm run build:worker",
     "build:main": "esbuild main.ts --bundle --outfile=dist/main.js --format=esm",
     "build:worker": "esbuild worker.ts --bundle --outfile=dist/worker.js --format=esm",
     "build:site": "bun run scripts/build-site.ts",
