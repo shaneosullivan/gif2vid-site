@@ -136,3 +136,4 @@ dist
 
 .last_modified_timestamp
 .DS_Store
+openai.env

@@ -9,7 +9,7 @@ interface ConversionResponse {
 }
 
 // Initialize worker
-const worker = new Worker("./dist/worker.js", { type: "module" });
+const worker = new Worker("/dist/worker.js", { type: "module" });
 let messageId = 0;
 let isWorkerReady = false;
 let currentObjectUrl: string | null = null;
@@ -21,7 +21,7 @@ const statusElement = document.getElementById("status") as HTMLDivElement;
 const outputContainer = document.getElementById("output") as HTMLDivElement;
 
 const fileInputWrapper = document.querySelector(
-  ".file-input-wrapper"
+  ".file-input-wrapper",
 ) as HTMLDivElement;
 
 // Update worker status indicator
@@ -36,7 +36,7 @@ function updateWorkerStatus(ready: boolean) {
 // Update status message
 function updateStatus(
   message: string,
-  type: "info" | "error" | "success" | "processing" = "info"
+  type: "info" | "error" | "success" | "processing" = "info",
 ) {
   statusElement.textContent = message;
   statusElement.className = `status ${type}`;
@@ -95,7 +95,7 @@ worker.onmessage = (event: MessageEvent<ConversionResponse>) => {
 function handleConversionSuccess(
   mp4Buffer: ArrayBuffer,
   inputSize: number,
-  outputSize: number
+  outputSize: number,
 ) {
   // Create a blob from the MP4 buffer
   const blob = new Blob([mp4Buffer], { type: "video/mp4" });
@@ -205,7 +205,7 @@ function handleConversionSuccess(
     <div class="info-item">
       <span class="info-label">Size Reduction:</span>
       <span class="info-value">${((1 - outputSize / inputSize) * 100).toFixed(
-        1
+        1,
       )}%</span>
     </div>
   `;
@@ -251,12 +251,12 @@ async function processGifFile(file: File) {
         id: messageId++,
         gifBuffer: gifBuffer.buffer,
       },
-      [gifBuffer.buffer]
+      [gifBuffer.buffer],
     );
   } catch (error) {
     updateStatus(
       error instanceof Error ? error.message : "Failed to read file",
-      "error"
+      "error",
     );
   }
 }

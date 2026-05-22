@@ -5,9 +5,9 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
@@ -30,6 +30,11 @@ body {
   padding: 0;
   text-align: center;
   position: relative;
+}
+
+.header p {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .hero-section {
@@ -91,7 +96,7 @@ body {
 
 .subtitle {
   color: black;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 0;
   margin: 0;
   font-size: 1.1rem;
   opacity: 0.9;
@@ -366,13 +371,59 @@ body {
   font-weight: 600;
 }
 
+#locales {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem 1.5rem 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.locale-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #475569;
+  font-size: 0.75rem;
+  transition: background 0.15s ease;
+}
+
+.locale-link:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.locale-link--current {
+  font-weight: 700;
+  color: #2c5364;
+}
+
+.locale-flag {
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  object-fit: cover;
+  display: block;
+}
+
+.locale-name {
+  white-space: nowrap;
+}
+
 .footer {
   background: #f8fafc;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
-  padding: 1.5rem;
+  padding: 1rem 1.5rem 1.5rem;
   text-align: center;
   font-size: 0.9rem;
   color: #64748b;
@@ -402,8 +453,14 @@ body {
   font-size: 1.2rem;
   font-weight: 600;
   margin-top: 2rem;
-  margin-bottom: 0;
+  margin-bottom: 0.75rem;
   color: #1e293b;
+}
+
+#page-content hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 2rem 0 1.5rem;
 }
 
 .faq-section {
