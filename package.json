@@ -9,6 +9,7 @@
     "build:worker": "esbuild worker.ts --bundle --outfile=dist/worker.js --format=esm",
     "build:site": "bun run scripts/build-site.ts",
     "translate:pages": "source openai.env && bun run scripts/translate-pages.ts",
+    "update-i18n": "source openai.env && json-ai-translation --dir i18n/strings --main en --openaitoken \"$OPENAI_API_KEY\" --notranslate 'Gif2Vid'",
     "watch": "npm run build -- --watch",
     "serve": "npx serve . -p 3340",
     "generate-icons": "node scripts/generate-icons.js"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "esbuild": "^0.24.0",
     "gray-matter": "^4.0.3",
+    "json-ai-translation": "^0.1.4",
     "node-html-parser": "^7.0.0",
     "openai": "^6.39.0",
     "prettier": "^3.8.3",

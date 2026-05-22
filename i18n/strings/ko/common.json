@@ -1,0 +1,21 @@
+{
+  "Select a GIF file to convert": "변환할 GIF 파일 선택",
+  "Processing": "처리 중",
+  "Conversion failed": "변환 실패",
+  "Original GIF": "원본 GIF",
+  "Converted Video": "변환된 비디오",
+  "Share/Save Video": "비디오 공유/저장",
+  "GIF converted to MP4": "GIF가 MP4로 변환됨",
+  "Tap the button above to save to Photos or Files": "위 버튼을 눌러 사진 또는 파일에 저장하세요",
+  "Or long-press the video below and select \"Save Video\"": "아래 비디오를 길게 누르고 \"비디오 저장\"을 선택하세요",
+  "Download Video": "비디오 다운로드",
+  "Size Reduction": "크기 축소",
+  "Conversion completed successfully": "변환이 성공적으로 완료되었습니다",
+  "Please select a valid GIF file": "유효한 GIF 파일을 선택하세요",
+  "App is not ready yet. Please wait": "앱이 아직 준비되지 않았습니다. 잠시 기다려 주세요",
+  "Reading file": "파일 읽기",
+  "Converting GIF to Video": "GIF를 비디오로 변환 중",
+  "Choose GIF File": "GIF 파일 선택",
+  "or drag and drop": "또는 끌어서 놓기",
+  "Initializing": "초기화 중"
+}

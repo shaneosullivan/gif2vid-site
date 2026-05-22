@@ -8,6 +8,9 @@ interface ConversionResponse {
   error?: string;
 }
 
+// This line is replaced by the build script
+const strings: Record<string, string> = {}; // BUILD SCRIPT REPLACE
+
 // Initialize worker
 const worker = new Worker("/dist/worker.js", { type: "module" });
 let messageId = 0;
@@ -24,12 +27,16 @@ const fileInputWrapper = document.querySelector(
   ".file-input-wrapper",
 ) as HTMLDivElement;
 
+function t(key: string): string {
+  return strings[key] || key;
+}
+
 // Update worker status indicator
 function updateWorkerStatus(ready: boolean) {
   isWorkerReady = ready;
 
   if (ready) {
-    updateStatus("Select a GIF file to convert.", "info");
+    updateStatus(t("Select a GIF file to convert"), "info");
   }
 }
 
@@ -76,7 +83,7 @@ worker.onmessage = (event: MessageEvent<ConversionResponse>) => {
       break;
 
     case "progress":
-      updateStatus(message || "Processing...", "processing");
+      updateStatus(message || t("Processing") + "...", "processing");
       break;
 
     case "success":
@@ -86,7 +93,7 @@ worker.onmessage = (event: MessageEvent<ConversionResponse>) => {
       break;
 
     case "error":
-      updateStatus(error || "Conversion failed", "error");
+      updateStatus(error || t("Conversion failed"), "error");
       break;
   }
 };
@@ -111,11 +118,11 @@ function handleConversionSuccess(
   gifContainer.className = "media-container";
   const gifTitle = document.createElement("h3");
   gifTitle.className = "media-title";
-  gifTitle.textContent = "Original GIF";
+  gifTitle.textContent = t("Original GIF");
   const gifImage = document.createElement("img");
   gifImage.src = currentGifUrl!;
   gifImage.className = "media-preview";
-  gifImage.alt = "Original GIF";
+  gifImage.alt = t("Original GIF");
   const gifSize = document.createElement("div");
   gifSize.className = "media-size";
   gifSize.textContent = formatFileSize(inputSize);
@@ -128,7 +135,7 @@ function handleConversionSuccess(
   videoContainer.className = "media-container";
   const videoTitle = document.createElement("h3");
   videoTitle.className = "media-title";
-  videoTitle.textContent = "Converted Video";
+  videoTitle.textContent = t("Converted Video");
   const video = document.createElement("video");
   video.src = url;
   video.controls = true;
@@ -162,8 +169,8 @@ function handleConversionSuccess(
         if (navigator.share && navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file],
-            title: "Converted Video",
-            text: "GIF converted to MP4",
+            title: t("Converted Video"),
+            text: t("GIF converted to MP4"),
           });
         } else {
           // Fallback: open video in new tab
@@ -180,8 +187,8 @@ function handleConversionSuccess(
     const iosInstructions = document.createElement("div");
     iosInstructions.className = "ios-instructions";
     iosInstructions.innerHTML = `
-      <p>💡 Tap the button above to save to Photos or Files</p>
-      <p>Or long-press the video below and select "Save Video"</p>
+      <p>💡 ${t("Tap the button above to save to Photos or Files")}</p>
+      <p>${t('Or long-press the video below and select "Save Video"')}</p>
     `;
 
     outputContainer.appendChild(downloadButton);
@@ -191,7 +198,7 @@ function handleConversionSuccess(
     const downloadLink = document.createElement("a");
     downloadLink.href = url;
     downloadLink.download = "converted-video.mp4";
-    downloadLink.textContent = "Download Video";
+    downloadLink.textContent = t("Download Video");
     downloadLink.className = "download-button";
     outputContainer.appendChild(downloadLink);
   }
@@ -203,7 +210,7 @@ function handleConversionSuccess(
   info.className = "conversion-info";
   info.innerHTML = `
     <div class="info-item">
-      <span class="info-label">Size Reduction:</span>
+      <span class="info-label">${t("Size Reduction")}:</span>
       <span class="info-value">${((1 - outputSize / inputSize) * 100).toFixed(
         1,
       )}%</span>
@@ -214,18 +221,18 @@ function handleConversionSuccess(
   outputContainer.appendChild(comparisonContainer);
   outputContainer.appendChild(info);
 
-  updateStatus("Conversion completed successfully!", "success");
+  updateStatus(t("Conversion completed successfully!"), "success");
 }
 
 // Process a GIF file
 async function processGifFile(file: File) {
   if (!file.name.toLowerCase().endsWith(".gif")) {
-    updateStatus("Please select a valid GIF file", "error");
+    updateStatus(t("Please select a valid GIF file"), "error");
     return;
   }
 
   if (!isWorkerReady) {
-    updateStatus("App is not ready yet. Please wait...", "error");
+    updateStatus(t("App is not ready yet. Please wait") + "...", "error");
     return;
   }
 
@@ -233,7 +240,7 @@ async function processGifFile(file: File) {
   cleanupPreviousConversion();
 
   try {
-    updateStatus("Reading file...", "processing");
+    updateStatus(t("Reading file") + "...", "processing");
 
     // Create object URL for the GIF to display
     const gifBlob = new Blob([file], { type: "image/gif" });
@@ -243,7 +250,7 @@ async function processGifFile(file: File) {
     const arrayBuffer = await file.arrayBuffer();
     const gifBuffer = new Uint8Array(arrayBuffer);
 
-    updateStatus("Converting GIF to Video...", "processing");
+    updateStatus(t("Converting GIF to Video") + "...", "processing");
 
     // Send to worker for conversion
     worker.postMessage(

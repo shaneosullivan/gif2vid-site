@@ -1,0 +1,21 @@
+{
+  "Select a GIF file to convert": "Sélectionnez un fichier GIF à convertir",
+  "Processing": "Traitement",
+  "Conversion failed": "Échec de la conversion",
+  "Original GIF": "GIF original",
+  "Converted Video": "Vidéo convertie",
+  "Share/Save Video": "Partager/Enregistrer la vidéo",
+  "GIF converted to MP4": "GIF converti en MP4",
+  "Tap the button above to save to Photos or Files": "Appuyez sur le bouton ci-dessus pour enregistrer dans Photos ou Fichiers",
+  "Or long-press the video below and select \"Save Video\"": "Ou appuyez longuement sur la vidéo ci-dessous et sélectionnez \"Enregistrer la vidéo\"",
+  "Download Video": "Télécharger la vidéo",
+  "Size Reduction": "Réduction de taille",
+  "Conversion completed successfully": "Conversion réussie",
+  "Please select a valid GIF file": "Veuillez sélectionner un fichier GIF valide",
+  "App is not ready yet. Please wait": "L'application n'est pas encore prête. Veuillez patienter",
+  "Reading file": "Lecture du fichier",
+  "Converting GIF to Video": "Conversion du GIF en vidéo",
+  "Choose GIF File": "Choisir un fichier GIF",
+  "or drag and drop": "ou glissez-déposez",
+  "Initializing": "Initialisation"
+}

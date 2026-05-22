@@ -1,5 +1,3 @@
-// Note that this is duplicated in next-i18nnext.config.js as that
-// file cannot import this for some odd reason
 export const LOCALES = [
   "cs",
   "de",
@@ -9,8 +7,7 @@ export const LOCALES = [
   "hi",
   "ko",
   "pl",
-  "lv",
-  "lt",
+  "pt",
   "zh",
 ];
 export const LOCALE_NAMES = [
@@ -47,12 +44,8 @@ export const LOCALE_NAMES = [
     name: "Polski",
   },
   {
-    code: "lt",
-    name: "Lietuvių",
-  },
-  {
-    code: "lv",
-    name: "Latviešu",
+    code: "pt",
+    name: "Português",
   },
   {
     code: "zh",

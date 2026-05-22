@@ -193,12 +193,16 @@
                 <polyline points="17 8 12 3 7 8"></polyline>
                 <line x1="12" y1="3" x2="12" y2="15"></line>
               </svg>
-              <span class="file-label-text">Choose GIF File</span>
-              <span class="file-label-hint">or drag and drop</span>
+              <span class="file-label-text" data-i18n>Wybierz plik GIF</span>
+              <span class="file-label-hint" data-i18n
+                >lub przeciągnij i upuść</span
+              >
             </label>
           </div>
 
-          <div id="status" class="status info">Initializing...</div>
+          <div id="status" class="status info">
+            <span data-i18n>Inicjowanie</span>...
+          </div>
         </section>
 
         <section
@@ -334,25 +338,15 @@
             />
             <span class="locale-name">Polski</span>
           </a>
-          <a href="/lt/" class="locale-link">
+          <a href="/pt/" class="locale-link">
             <img
-              src="/images/locale/lt.png"
-              alt="Lietuvių"
+              src="/images/locale/pt.png"
+              alt="Português"
               class="locale-flag"
               width="32"
               height="24"
             />
-            <span class="locale-name">Lietuvių</span>
-          </a>
-          <a href="/lv/" class="locale-link">
-            <img
-              src="/images/locale/lv.png"
-              alt="Latviešu"
-              class="locale-flag"
-              width="32"
-              height="24"
-            />
-            <span class="locale-name">Latviešu</span>
+            <span class="locale-name">Português</span>
           </a>
           <a href="/zh/" class="locale-link">
             <img
@@ -383,7 +377,7 @@
       </footer>
     </div>
 
-    <script type="module" src="/dist/main.js"></script>
+    <script type="module" src="/dist/main.pl.js"></script>
     <script
       async
       src="https://scripts.simpleanalyticscdn.com/latest.js"

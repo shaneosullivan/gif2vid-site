@@ -3,10 +3,11 @@ import { readdir, readFile, writeFile, unlink, mkdir } from "fs/promises";
 import { join, basename } from "path";
 import { existsSync } from "fs";
 import * as prettier from "prettier";
+import * as esbuild from "esbuild";
 import { LOCALE_NAMES } from "../config/locale";
 
 const ROOT = join(import.meta.dir, "..");
-const PAGES_DIR = join(ROOT, "pages");
+const PAGES_DIR = join(ROOT, "i18n", "pages");
 const TEMPLATE_PATH = join(ROOT, "index.html");
 const BASE_URL = "https://gif2vid.com";
 
@@ -157,10 +158,53 @@ function renderLocaleLinks(currentLocale: string, pageName: string): string {
   }).join("\n");
 }
 
+const STRINGS_PLACEHOLDER =
+  'const strings: Record<string, string> = {}; // BUILD SCRIPT REPLACE';
+
+async function loadLocaleStrings(
+  locale: string,
+): Promise<Record<string, string>> {
+  const stringsPath = join(ROOT, "i18n", "strings", locale, "common.json");
+  if (!existsSync(stringsPath)) return {};
+  return JSON.parse(await readFile(stringsPath, "utf-8"));
+}
+
+async function buildLocaleJs(
+  locale: string,
+  strings: Record<string, string>,
+): Promise<string> {
+  if (Object.keys(strings).length === 0) return "/dist/main.js";
+
+  const mainTs = await readFile(join(ROOT, "main.ts"), "utf-8");
+  const stringsJson = JSON.stringify(strings);
+  const localeTs = mainTs.replace(
+    STRINGS_PLACEHOLDER,
+    `const strings: Record<string, string> = ${stringsJson}; // BUILD SCRIPT REPLACE`,
+  );
+
+  const tsTempPath = join(ROOT, "dist", `main.${locale}.ts`);
+  const jsOutPath = join(ROOT, "dist", `main.${locale}.js`);
+
+  await writeFile(tsTempPath, localeTs, "utf-8");
+
+  await esbuild.build({
+    entryPoints: [tsTempPath],
+    bundle: true,
+    outfile: jsOutPath,
+    format: "esm",
+  });
+
+  await unlink(tsTempPath);
+  console.log(`Built: dist/main.${locale}.js`);
+  return `/dist/main.${locale}.js`;
+}
+
 async function buildPage(
   mdPath: string,
   templateHtml: string,
   locale: string,
+  mainJsFile: string = "/dist/main.js",
+  strings: Record<string, string> = {},
 ): Promise<{ outputPath: string; url: string; html: string }> {
   const mdContent = await readFile(mdPath, "utf-8");
   const { frontmatter, body } = parseFrontmatter(mdContent);
@@ -221,6 +265,22 @@ async function buildPage(
     ?.setAttribute("content", url);
   root.querySelector('link[rel="canonical"]')?.setAttribute("href", url);
 
+  // Locale-specific JS bundle
+  if (mainJsFile !== "/dist/main.js") {
+    root
+      .querySelector('script[src="/dist/main.js"]')
+      ?.setAttribute("src", mainJsFile);
+  }
+
+  // Translate data-i18n nodes
+  if (Object.keys(strings).length > 0) {
+    for (const node of root.querySelectorAll("[data-i18n]")) {
+      const key = node.textContent.trim();
+      const translated = strings[key];
+      if (translated) node.set_content(translated);
+    }
+  }
+
   const html = await prettier.format(root.toString(), { parser: "html" });
 
   return { outputPath, url, html };
@@ -260,6 +320,19 @@ async function main() {
 
   const allUrls: string[] = [];
 
+  // Load strings and build locale-specific JS bundles for all non-English locales
+  const localeJsMap = new Map<string, string>();
+  const localeStringsMap = new Map<string, Record<string, string>>();
+  for (const locale of localeDirs) {
+    const strings =
+      locale === "en" ? {} : await loadLocaleStrings(locale);
+    localeStringsMap.set(locale, strings);
+    localeJsMap.set(
+      locale,
+      locale === "en" ? "/dist/main.js" : await buildLocaleJs(locale, strings),
+    );
+  }
+
   for (const locale of localeDirs) {
     const localeDir = join(PAGES_DIR, locale);
     const mdFiles = (await readdir(localeDir))
@@ -278,6 +351,8 @@ async function main() {
         mdPath,
         templateHtml,
         locale,
+        localeJsMap.get(locale) ?? "/dist/main.js",
+        localeStringsMap.get(locale) ?? {},
       );
 
       // Never delete the root index.html; always delete and recreate everything else

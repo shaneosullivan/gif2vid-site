@@ -1,0 +1,21 @@
+{
+  "Select a GIF file to convert": "选择要转换的GIF文件",
+  "Processing": "处理中",
+  "Conversion failed": "转换失败",
+  "Original GIF": "原始GIF",
+  "Converted Video": "已转换视频",
+  "Share/Save Video": "分享/保存视频",
+  "GIF converted to MP4": "GIF已转换为MP4",
+  "Tap the button above to save to Photos or Files": "点按上面的按钮将其保存到照片或文件",
+  "Or long-press the video below and select \"Save Video\"": "或长按下面的视频并选择\"保存视频\"",
+  "Download Video": "下载视频",
+  "Size Reduction": "尺寸缩小",
+  "Conversion completed successfully": "转换成功完成",
+  "Please select a valid GIF file": "请选择有效的GIF文件",
+  "App is not ready yet. Please wait": "应用程序尚未准备好。请稍等",
+  "Reading file": "读取文件",
+  "Converting GIF to Video": "将GIF转换为视频",
+  "Choose GIF File": "选择GIF文件",
+  "or drag and drop": "或拖放",
+  "Initializing": "初始化中"
+}

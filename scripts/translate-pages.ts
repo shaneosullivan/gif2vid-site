@@ -5,7 +5,7 @@ import OpenAI from "openai";
 import { LOCALES, LOCALE_NAMES } from "../config/locale";
 
 const DEFAULT_LOCALE = "en";
-const PAGES_DIR = path.join(import.meta.dir, "..", "pages");
+const PAGES_DIR = path.join(import.meta.dir, "..", "i18n", "pages");
 
 if (!process.env.OPENAI_API_KEY) {
   console.error("Error: OPENAI_API_KEY environment variable is not set");
