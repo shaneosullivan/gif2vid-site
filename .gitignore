@@ -137,3 +137,14 @@ dist
 .last_modified_timestamp
 .DS_Store
 openai.env
+
+# localised output
+cs
+de
+es
+fr
+hi
+ko
+pl
+pt
+zh
